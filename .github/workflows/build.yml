@@ -1,0 +1,42 @@
+name: Build ArduPlane Custom Logger
+
+on:
+  push:
+    branches: [ bmi-logger ]
+  pull_request:
+    branches: [ bmi-logger ]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install prerequisites
+        run: |
+          Tools/environment_install/install-prereqs-ubuntu.sh -y
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure build
+        run: |
+          source ~/.profile
+          ./waf configure --board=Pixhawk1 --extra-hwdef=libraries/AP_HAL_ChibiOS/hwdef/imupilog-extra.dat
+
+      - name: Compile ArduPlane
+        run: |
+          source ~/.profile
+          ./waf plane
+
+      - name: Upload firmware artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: arduplane-bmi-logger
+          path: build/Pixhawk1/bin/arduplane.apj
