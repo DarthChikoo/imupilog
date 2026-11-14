@@ -667,13 +667,22 @@ const AP_Param::GroupInfo AP_InertialSensor::var_info[] = {
     // @Path: AP_InertialSensor_Params.cpp
     AP_SUBGROUPINFO(params[0], "4_", 54, AP_InertialSensor, AP_InertialSensor_Params),
 #endif
-
 #if INS_MAX_INSTANCES > 4
     // @Group: 5_
     // @Path: AP_InertialSensor_Params.cpp
     AP_SUBGROUPINFO(params[1], "5_", 55, AP_InertialSensor, AP_InertialSensor_Params),
 #endif
-
+#if INS_MAX_INSTANCES > 5
+    // @Group: 6_
+    // @Path: AP_InertialSensor_Params.cpp
+    AP_SUBGROUPINFO(params[2], "6_", 57, AP_InertialSensor, AP_InertialSensor_Params),
+#endif
+    // @Param: _RAW_LOG_OPT
+    // @DisplayName: Raw logging options
+    // @Description: Raw logging options bitmask
+    // @Bitmask: 0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3:Pre and post filter
+    // @User: Advanced
+    AP_GROUPINFO("_RAW_LOG_OPT", 56, AP_InertialSensor, raw_logging_options, 0),
     // @Param: _RAW_LOG_OPT
     // @DisplayName: Raw logging options
     // @Description: Raw logging options bitmask
