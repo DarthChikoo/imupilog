@@ -683,13 +683,6 @@ const AP_Param::GroupInfo AP_InertialSensor::var_info[] = {
     // @Bitmask: 0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3:Pre and post filter
     // @User: Advanced
     AP_GROUPINFO("_RAW_LOG_OPT", 56, AP_InertialSensor, raw_logging_options, 0),
-    // @Param: _RAW_LOG_OPT
-    // @DisplayName: Raw logging options
-    // @Description: Raw logging options bitmask
-    // @Bitmask: 0:Log primary gyro only, 1:Log all gyros, 2:Post filter, 3: Pre and post filter
-    // @User: Advanced
-    AP_GROUPINFO("_RAW_LOG_OPT", 56, AP_InertialSensor, raw_logging_options, 0),
-
     /*
       NOTE: parameter indexes have gaps above. When adding new
       parameters check for conflicts carefully
