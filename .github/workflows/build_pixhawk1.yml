@@ -1,0 +1,31 @@
+name: Build Pixhawk1 Firmware
+
+on:
+  push:
+    branches: [ bmi-logger ]
+  workflow_dispatch:
+
+jobs:
+  build-pixhawk1:
+    runs-on: ubuntu-22.04
+    container:
+      image: ardupilot/ardupilot-dev-chibios:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Configure Waf for Pixhawk1
+        run: |
+          ./waf configure --board=Pixhawk1 --extra-hwdef=libraries/AP_HAL_ChibiOS/hwdef/imupilog-extra.dat
+
+      - name: Build ArduPlane
+        run: |
+          ./waf plane
+
+      - name: Upload Firmware Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pixhawk1-arduplane-bmi160
+          path: build/Pixhawk1/bin/arduplane.apj
